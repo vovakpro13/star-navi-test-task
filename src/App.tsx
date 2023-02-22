@@ -1,30 +1,41 @@
-import { useState } from 'react';
-import './App.css';
+import { Alert, Space, Spin } from 'antd';
+
+import useInitializeApp from './hooks/useInitializeApp';
+import { useAppSelector } from './app/hooks';
+import { selectError, selectIsModesLoading } from './app/modesSlice';
+
+import ModeForm from './components/ModeForm';
+import LogColumn from './components/LogColumn';
+import SquaresGrid from './components/SquaresGrid';
 
 function App() {
-  const [count, setCount] = useState(0);
-  console.log(import.meta.env.VITE_BASE_API_URL);
+  const isLoading = useAppSelector(selectIsModesLoading);
+  const error = useAppSelector(selectError);
+
+  useInitializeApp();
+
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer"></a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <Spin spinning={isLoading}>
+      <Space direction="vertical" size="large">
+        <Space align="start" size="large">
+          <Space direction="vertical" size="large">
+            <ModeForm />
+            <SquaresGrid />
+          </Space>
+
+          <LogColumn />
+        </Space>
+
+        {error && (
+          <Alert
+            message="Error"
+            description={`${error}. Reload the page please.`}
+            type="error"
+            showIcon
+          />
+        )}
+      </Space>
+    </Spin>
   );
 }
 

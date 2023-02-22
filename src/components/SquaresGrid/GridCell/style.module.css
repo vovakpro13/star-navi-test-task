@@ -1,0 +1,11 @@
+.GridCell {
+    border: 1px solid black;
+    width: 30px;
+    height: 30px;
+    border-collapse: collapse;
+    transition: background-color 0.2s;
+}
+
+.GridCellActive {
+    background-color: cornflowerblue;
+}
