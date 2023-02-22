@@ -5,9 +5,11 @@ import { useAppSelector } from '../../app/hooks';
 import { selectActiveCells } from '../../app/cellsSlice';
 
 import classes from './styles.module.css';
+import { selectCurrentMode } from '../../app/modesSlice';
 
 const LogColumn: FC = () => {
   const cells = useAppSelector(selectActiveCells);
+  const currentMode = useAppSelector(selectCurrentMode);
 
   return (
     <Space className={classes.Wrapper} direction="vertical" size="large">
@@ -29,7 +31,7 @@ const LogColumn: FC = () => {
           />
         ))}
 
-        {!cells.length && (
+        {currentMode && !cells.length && (
           <Typography.Text type="success">
             There are no active cells yet. Move your mouse over the grid to
             start;

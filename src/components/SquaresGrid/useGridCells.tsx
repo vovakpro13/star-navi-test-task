@@ -2,19 +2,20 @@ import React, { useMemo } from 'react';
 
 import { useAppSelector } from '../../app/hooks';
 import { selectCurrentMode } from '../../app/modesSlice';
-import { DefaultCurrentMode } from '../../constants/common';
 import { createRandomArray } from '../../helpers/createRandomArray';
 
 const useGridCells = () => {
-  const currentMode = useAppSelector(selectCurrentMode) || DefaultCurrentMode;
+  const currentMode = useAppSelector(selectCurrentMode);
 
-  return useMemo(
-    () =>
-      createRandomArray(currentMode.field).map(() =>
+  return useMemo(() => {
+    if (currentMode) {
+      return createRandomArray(currentMode.field).map(() =>
         createRandomArray(currentMode.field)
-      ),
-    [currentMode.field]
-  );
+      );
+    }
+
+    return null;
+  }, [currentMode]);
 };
 
 export default useGridCells;
