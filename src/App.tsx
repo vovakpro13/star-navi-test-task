@@ -2,7 +2,11 @@ import { Alert, Space, Spin } from 'antd';
 
 import useInitializeApp from './hooks/useInitializeApp';
 import { useAppSelector } from './app/hooks';
-import { selectError, selectIsModesLoading } from './app/modesSlice';
+import {
+  selectCurrentMode,
+  selectError,
+  selectIsModesLoading,
+} from './app/modesSlice';
 
 import ModeForm from './components/ModeForm';
 import LogColumn from './components/LogColumn';
@@ -11,6 +15,7 @@ import SquaresGrid from './components/SquaresGrid';
 function App() {
   const isLoading = useAppSelector(selectIsModesLoading);
   const error = useAppSelector(selectError);
+  const currentMode = useAppSelector(selectCurrentMode);
 
   useInitializeApp();
 
@@ -23,7 +28,7 @@ function App() {
             <SquaresGrid />
           </Space>
 
-          <LogColumn />
+          {currentMode && <LogColumn />}
         </Space>
 
         {error && (
